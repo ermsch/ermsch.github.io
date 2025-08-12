@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       :root{
         --ink:#2b2a2a;          /* edles Tinten-Schwarz */
@@ -17,60 +16,142 @@
         --rose:#d6b9b0;         /* wärmeres Rosé */
         --gold:#bfa27a;         /* Champagner-Gold */
         --taupe:#8d7e72;        /* sanftes Taupe */
+        --border: rgba(0,0,0,.08);
       }
       html{scroll-behavior:smooth}
-      body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:var(--ink); background:var(--soft)}
+      body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:var(--ink); background:var(--soft); margin:0}
       .h-serif{font-family:"Playfair Display",Georgia,serif}
-      .container-narrow{max-width:1040px}
+      .container{max-width:1040px; margin:0 auto; padding:0 20px}
       .shadow-soft{box-shadow:0 12px 40px rgba(0,0,0,.06)}
       .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.08),transparent)}
-      .card{background:linear-gradient(180deg,#fff, #fbf9f7); border:1px solid rgba(0,0,0,.06)}
-      .btn{border:1px solid var(--gold); background:linear-gradient(180deg,#e9ddcd,#d9c9b0); color:#2a2113}
+      .card{background:linear-gradient(180deg,#fff, #fbf9f7); border:1px solid var(--border); border-radius:16px}
+      .btn{border:1px solid var(--gold); background:linear-gradient(180deg,#e9ddcd,#d9c9b0); color:#2a2113; border-radius:999px; padding:12px 18px; text-decoration:none; display:inline-block}
       .btn:hover{filter:brightness(0.98)}
-      .btn-ghost{border:1px solid rgba(0,0,0,.1); background:#fff}
-      .tag{background:linear-gradient(180deg,var(--blush),#efe7e2); border:1px solid rgba(0,0,0,.06)}
+      .btn-ghost{border:1px solid rgba(0,0,0,.1); background:#fff; color:inherit; border-radius:12px; padding:12px 18px; text-decoration:none; display:inline-block}
+      .tag{display:inline-block; background:linear-gradient(180deg,var(--blush),#efe7e2); border:1px solid var(--border); border-radius:999px; padding:8px 14px; font-size:14px}
+
+      /* Header */
+      header{position:fixed; inset:0 0 auto 0; z-index:50; backdrop-filter:saturate(160%) blur(8px); background:color-mix(in oklab, var(--soft) 80%, transparent);}
+      nav.nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+      .brand{font-size:22px; letter-spacing:.3px}
+      .brand .amp{color:var(--taupe)}
+      .nav-links{display:none; gap:28px; font-size:15px}
+      .nav-links a{color:inherit; text-decoration:none}
+      .nav-links a:hover{color:var(--taupe)}
+      @media(min-width:768px){.nav-links{display:flex}}
+
+      /* Sections */
+      section{scroll-margin-top:80px}
+      .section{padding:72px 0}
+      .section-lg{padding:96px 0}
+
+      /* Hero */
+      .hero{padding-top:112px}
+      .hero-grid{display:grid; gap:40px}
+      .hero h1{font-size:34px; line-height:1.2; margin:0}
+      .hero p{font-size:17px; color:#484848}
+      .hero-cta{margin-top:22px; display:flex; gap:12px; flex-wrap:wrap}
+      .hero-media{position:relative; aspect-ratio:4/3; border-radius:24px; overflow:hidden}
+      .hero-media .overlay{position:absolute; inset:0; background:radial-gradient(60% 60% at 70% 20%, rgba(217,185,176,.22), transparent), radial-gradient(60% 60% at 10% 90%, rgba(186,160,136,.18), transparent)}
+      .hero-media .center{position:absolute; inset:0; display:grid; place-items:center; text-align:center}
+      .hero-media .center .title{font-size:44px; color:var(--taupe)}
+      @media(min-width:1024px){
+        .hero-grid{grid-template-columns:1fr 1fr}
+        .hero h1{font-size:48px}
+        .hero-media .center .title{font-size:56px}
+      }
+
+      /* Grid helpers */
+      .grid{display:grid; gap:24px}
+      .grid-2{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .grid-4{grid-template-columns:1fr}
+      @media(min-width:640px){.grid-2{grid-template-columns:1fr 1fr}}
+      @media(min-width:768px){.grid-3{grid-template-columns:1fr 1fr 1fr}}
+      @media(min-width:1024px){.grid-4{grid-template-columns:repeat(4,1fr)}}
+
+      /* Typo */
+      h2{font-size:32px; margin:0}
+      @media(min-width:768px){h2{font-size:40px}}
+      h3{font-size:20px; margin:0}
+      .muted{color:#666}
+      .prose{line-height:1.7}
+
+      /* Lists / price */
+      .price-list{list-style:none; padding:0; margin:16px 0 0 0}
+      .price-list li{display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px dashed rgba(0,0,0,.06)}
+      .price-list li:last-child{border-bottom:none}
+
+      /* Cards */
+      .card{padding:24px}
+
+      /* USP row */
+      .usps{display:flex; flex-wrap:wrap; gap:12px}
+
+      /* About */
+      .about-media{position:relative; aspect-ratio:4/3; border-radius:24px; overflow:hidden}
+      .about-media .overlay{position:absolute; inset:0; background:radial-gradient(70% 70% at 30% 20%, rgba(234,223,217,.45), transparent), radial-gradient(60% 60% at 90% 90%, rgba(191,162,122,.22), transparent)}
+      .about-media .center{position:absolute; inset:0; display:grid; place-items:center; text-align:center}
+
+      /* Contact */
+      .contact-card p{margin:6px 0}
+      .socials{display:flex; gap:10px; margin-top:10px}
+      .socials a{border:1px solid rgba(0,0,0,.1); border-radius:999px; padding:8px 14px; font-size:14px; text-decoration:none; color:inherit; background:#fff}
+
+      .map{aspect-ratio:4/3; width:100%; border:1px solid var(--border); border-radius:24px; overflow:hidden}
+      form.contact{display:grid; gap:12px; margin-top:16px}
+      .row{display:grid; gap:12px}
+      @media(min-width:768px){.row{grid-template-columns:1fr 1fr}}
+      input, textarea{border:1px solid #d0d0d0; border-radius:12px; background:#fff; padding:12px 14px; font:inherit}
+      textarea{min-height:120px; resize:vertical}
+
+      /* Footer */
+      footer{background:#ffffffa0}
+      .footer-top{display:flex; flex-direction:column; gap:16px; align-items:flex-start; justify-content:space-between}
+      .footer-links{display:flex; gap:18px}
+      .footer-links a{color:inherit; text-decoration:underline; text-decoration-color:var(--gold); text-underline-offset:4px}
+      @media(min-width:768px){.footer-top{flex-direction:row; align-items:center}}
     </style>
   </head>
   <body>
     <!-- Header -->
-    <header class="fixed inset-x-0 top-0 z-50 bg-[var(--soft)]/70 backdrop-blur-md">
-      <nav class="mx-auto container-narrow px-5 py-4 flex items-center justify-between">
-        <a href="#top" class="h-serif text-2xl font-semibold tracking-wide">Relax&nbsp;&nbsp;<span class="text-[var(--taupe)]">&</span>&nbsp;&nbsp;Care</a>
-        <div class="hidden md:flex items-center gap-8 text-[15px]">
-          <a href="#leistungen" class="hover:text-[var(--taupe)]">Leistungen</a>
-          <a href="#preise" class="hover:text-[var(--taupe)]">Preise</a>
-          <a href="#ueber" class="hover:text-[var(--taupe)]">Über mich</a>
-          <a href="#kontakt" class="hover:text-[var(--taupe)]">Kontakt</a>
-        </div>
-        <a href="https://www.treatwell.de/ort/relax-care/" target="_blank" class="btn rounded-full px-5 py-2.5 text-sm font-medium shadow-soft">Termin buchen</a>
-      </nav>
+    <header>
+      <div class="container">
+        <nav class="nav">
+          <a href="#top" class="brand h-serif">Relax&nbsp;&nbsp;<span class="amp">&</span>&nbsp;&nbsp;Care</a>
+          <div class="nav-links">
+            <a href="#leistungen">Leistungen</a>
+            <a href="#preise">Preise</a>
+            <a href="#ueber">Über mich</a>
+            <a href="#kontakt">Kontakt</a>
+          </div>
+          <a href="https://www.treatwell.de/ort/relax-care/" target="_blank" class="btn">Termin buchen</a>
+        </nav>
+      </div>
       <div class="divider"></div>
     </header>
 
     <!-- Hero -->
-    <section id="top" class="pt-32">
-      <div class="mx-auto container-narrow px-5 grid lg:grid-cols-12 gap-10 items-center">
-        <div class="lg:col-span-6">
-          <h1 class="h-serif text-4xl md:text-5xl leading-tight">
-            Sanfte Hautpflege & medizinische Kosmetik –<br class="hidden md:block"> achtsam, ruhig, individuell.
-          </h1>
-          <p class="mt-5 text-[17px] text-neutral-700 max-w-prose">
-            Im Studio <strong>RELAX & CARE</strong> in Ludwigsburg erhalten Sie wirkstoffbasierte Behandlungen, 
-            wohltuende Massagen und ursachenorientierte Beratung – für Haut, die sichtbar zur Ruhe kommt.
-          </p>
-          <div class="mt-7 flex flex-wrap gap-3">
-            <a href="https://www.treatwell.de/ort/relax-care/" target="_blank" class="btn rounded-xl px-6 py-3 text-[15px] font-semibold shadow-soft">Jetzt Termin vereinbaren</a>
-            <a href="#leistungen" class="btn-ghost rounded-xl px-6 py-3 text-[15px] font-semibold">Leistungen entdecken</a>
+    <section id="top" class="hero section">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <h1 class="h-serif">Sanfte Hautpflege & medizinische Kosmetik – achtsam, ruhig, individuell.</h1>
+            <p class="prose" style="margin-top:16px">Im Studio <strong>RELAX & CARE</strong> in Ludwigsburg erhalten Sie wirkstoffbasierte Behandlungen, wohltuende Massagen und ursachenorientierte Beratung – für Haut, die sichtbar zur Ruhe kommt.</p>
+            <div class="hero-cta">
+              <a href="https://www.treatwell.de/ort/relax-care/" target="_blank" class="btn">Jetzt Termin vereinbaren</a>
+              <a href="#leistungen" class="btn-ghost">Leistungen entdecken</a>
+            </div>
+            <p class="muted" style="margin-top:10px; font-size:14px">Kooperation mit Hautarztpraxis · Termine nach Vereinbarung</p>
           </div>
-          <p class="mt-4 text-sm text-neutral-600">Kooperation mit Hautarztpraxis · Termine nach Vereinbarung</p>
-        </div>
-        <div class="lg:col-span-6">
-          <div class="relative aspect-[4/3] w-full overflow-hidden rounded-3xl card shadow-soft">
-            <div class="absolute inset-0" style="background:radial-gradient(60% 60% at 70% 20%, rgba(217,185,176,.22), transparent), radial-gradient(60% 60% at 10% 90%, rgba(186,160,136,.18), transparent)"></div>
-            <div class="absolute inset-0 grid place-items-center">
-              <div class="text-center">
-                <div class="h-serif text-5xl tracking-wide" style="color:var(--taupe)">Ruhige&nbsp;Auszeit</div>
-                <p class="mt-2 text-neutral-600">Platzhalterfläche – hier kann ein stimmungsvolles Studio- oder Detailfoto stehen.</p>
+          <div>
+            <div class="hero-media card shadow-soft">
+              <div class="overlay"></div>
+              <div class="center">
+                <div>
+                  <div class="h-serif title">Ruhige Auszeit</div>
+                  <p class="muted" style="margin-top:8px">Platzhalterfläche – hier kann ein stimmungsvolles Studio‑ oder Detailfoto stehen.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -79,90 +160,95 @@
     </section>
 
     <!-- USP-Tags -->
-    <section class="py-8">
-      <div class="mx-auto container-narrow px-5 flex flex-wrap gap-3">
-        <span class="tag rounded-full px-4 py-2 text-sm">Medizinische Kosmetik</span>
-        <span class="tag rounded-full px-4 py-2 text-sm">Massagen zur Entspannung</span>
-        <span class="tag rounded-full px-4 py-2 text-sm">Kinesiologie</span>
-        <span class="tag rounded-full px-4 py-2 text-sm">Schüßler Salze</span>
-        <span class="tag rounded-full px-4 py-2 text-sm">Individuelle Beratung</span>
+    <section class="section" style="padding-top:24px">
+      <div class="container">
+        <div class="usps">
+          <span class="tag">Medizinische Kosmetik</span>
+          <span class="tag">Massagen zur Entspannung</span>
+          <span class="tag">Kinesiologie</span>
+          <span class="tag">Schüßler Salze</span>
+          <span class="tag">Individuelle Beratung</span>
+        </div>
       </div>
     </section>
 
     <!-- Leistungen -->
-    <section id="leistungen" class="py-18 md:py-24">
-      <div class="mx-auto container-narrow px-5">
-        <h2 class="h-serif text-3xl md:text-4xl">Leistungen</h2>
-        <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <article class="card rounded-2xl p-6">
-            <h3 class="h-serif text-xl">Medizinische Kosmetik</h3>
-            <p class="mt-2 text-sm text-neutral-700">Wirkstoffkosmetik, moderne Methoden & individuelle Behandlungspläne – für Haut, die nachhaltig ins Gleichgewicht findet.</p>
+    <section id="leistungen" class="section-lg">
+      <div class="container">
+        <h2 class="h-serif">Leistungen</h2>
+        <div class="grid grid-4" style="margin-top:24px">
+          <article class="card shadow-soft">
+            <h3 class="h-serif">Medizinische Kosmetik</h3>
+            <p class="prose muted" style="margin-top:8px">Wirkstoffkosmetik, moderne Methoden & individuelle Behandlungspläne – für Haut, die nachhaltig ins Gleichgewicht findet.</p>
           </article>
-          <article class="card rounded-2xl p-6">
-            <h3 class="h-serif text-xl">Massagen</h3>
-            <p class="mt-2 text-sm text-neutral-700">Tiefenentspannung, Balance oder Immunbooster – Loslassen, ankommen, aufatmen.</p>
+          <article class="card shadow-soft">
+            <h3 class="h-serif">Massagen</h3>
+            <p class="prose muted" style="margin-top:8px">Tiefenentspannung, Balance oder Immunbooster – Loslassen, ankommen, aufatmen.</p>
           </article>
-          <article class="card rounded-2xl p-6">
-            <h3 class="h-serif text-xl">Kinesiologie</h3>
-            <p class="mt-2 text-sm text-neutral-700">Muskeltest zur Klärung, was Körper & Haut wirklich guttut. Ursachen erkennen statt nur Symptome behandeln.</p>
+          <article class="card shadow-soft">
+            <h3 class="h-serif">Kinesiologie</h3>
+            <p class="prose muted" style="margin-top:8px">Muskeltest zur Klärung, was Körper & Haut wirklich guttut. Ursachen erkennen statt nur Symptome behandeln.</p>
           </article>
-          <article class="card rounded-2xl p-6">
-            <h3 class="h-serif text-xl">Schüßler Salze</h3>
-            <p class="mt-2 text-sm text-neutral-700">Sanfte Begleitung und gezielte Empfehlungen – ergänzend zur Hautbehandlung.</p>
+          <article class="card shadow-soft">
+            <h3 class="h-serif">Schüßler Salze</h3>
+            <p class="prose muted" style="margin-top:8px">Sanfte Begleitung und gezielte Empfehlungen – ergänzend zur Hautbehandlung.</p>
           </article>
         </div>
       </div>
     </section>
 
     <!-- Preise -->
-    <section id="preise" class="py-18 md:py-24 bg-white/60">
-      <div class="mx-auto container-narrow px-5">
-        <h2 class="h-serif text-3xl md:text-4xl">Preise (Auszug)</h2>
-        <div class="mt-8 grid md:grid-cols-2 gap-6">
-          <div class="card rounded-2xl p-6">
-            <h3 class="h-serif text-lg">Massagen</h3>
-            <ul class="mt-4 space-y-3">
-              <li class="flex justify-between"><span>Stoffwechselmassage</span><span class="font-semibold">80€</span></li>
-              <li class="flex justify-between"><span>Tiefenentspannungsmassage</span><span class="font-semibold">80€</span></li>
-              <li class="flex justify-between"><span>Massage zur Stärkung des Immunsystems</span><span class="font-semibold">80€</span></li>
-              <li class="flex justify-between"><span>Balance / Anti‑Allergie Massage</span><span class="font-semibold">80€</span></li>
+    <section id="preise" class="section" style="background:#ffffff99">
+      <div class="container">
+        <h2 class="h-serif">Preise (Auszug)</h2>
+        <div class="grid grid-2" style="margin-top:24px">
+          <div class="card shadow-soft">
+            <h3 class="h-serif">Massagen</h3>
+            <ul class="price-list">
+              <li><span>Stoffwechselmassage</span><span><strong>80€</strong></span></li>
+              <li><span>Tiefenentspannungsmassage</span><span><strong>80€</strong></span></li>
+              <li><span>Massage zur Stärkung des Immunsystems</span><span><strong>80€</strong></span></li>
+              <li><span>Balance / Anti‑Allergie Massage</span><span><strong>80€</strong></span></li>
             </ul>
-            <p class="mt-4 text-xs text-neutral-600">Weitere Varianten: Neubeginn/Geburt, Innere Kind, Loslassen, Transformation, Harmonie, Lebensfreude, Vision – je 80€.</p>
+            <p class="muted" style="margin-top:12px; font-size:12px">Weitere Varianten: Neubeginn/Geburt, Innere Kind, Loslassen, Transformation, Harmonie, Lebensfreude, Vision – je 80€.</p>
           </div>
-          <div class="card rounded-2xl p-6">
-            <h3 class="h-serif text-lg">Kosmetik & Beratung</h3>
-            <ul class="mt-4 space-y-3">
-              <li class="flex justify-between"><span>Waxing Depilation – Kinn</span><span class="font-semibold">14€</span></li>
-              <li class="flex justify-between"><span>Wirkstoff-/medizinische Kosmetik</span><span class="font-semibold">nach Beratung</span></li>
-              <li class="flex justify-between"><span>Kinesiologie&nbsp;(Sitzung)</span><span class="font-semibold">Preis nach Zeit</span></li>
+          <div class="card shadow-soft">
+            <h3 class="h-serif">Kosmetik & Beratung</h3>
+            <ul class="price-list">
+              <li><span>Waxing Depilation – Kinn</span><span><strong>14€</strong></span></li>
+              <li><span>Wirkstoff-/medizinische Kosmetik</span><span><strong>nach Beratung</strong></span></li>
+              <li><span>Kinesiologie (Sitzung)</span><span><strong>Preis nach Zeit</strong></span></li>
             </ul>
-            <a href="#kontakt" class="mt-4 inline-block underline decoration-[var(--gold)] underline-offset-4">Individuelle Angebote anfragen</a>
+            <p style="margin-top:12px">
+              <a href="#kontakt" class="footer-links">Individuelle Angebote anfragen</a>
+            </p>
           </div>
         </div>
-        <div class="mt-8">
-          <a href="https://www.treatwell.de/ort/relax-care/" target="_blank" class="btn rounded-full px-6 py-3 text-[15px] font-semibold shadow-soft">Online buchen</a>
-        </div>
+        <p style="margin-top:18px">
+          <a href="https://www.treatwell.de/ort/relax-care/" target="_blank" class="btn">Online buchen</a>
+        </p>
       </div>
     </section>
 
     <!-- Über mich -->
-    <section id="ueber" class="py-18 md:py-24">
-      <div class="mx-auto container-narrow px-5 grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <h2 class="h-serif text-3xl md:text-4xl">Über mich</h2>
-          <p class="mt-4 text-neutral-700">Ich bin <strong>Pia Harrsch‑Ritchie</strong> und begleite Sie mit Ruhe, Erfahrung und einem ganzheitlichen Blick. Mein Fokus: 
-            individuelle Hautpflege, die wirkt – mit Transparenz, Zeit und achtsamer Beratung.</p>
-          <ul class="mt-5 space-y-2 text-neutral-700">
-            <li>• Kooperation mit Ludwigsburger Hautarztpraxis</li>
-            <li>• Zusatzausbildungen in Pathophysiognomik & Kinesiologie</li>
-            <li>• Termine nach Vereinbarung – private Rückzugsatmosphäre</li>
-          </ul>
-        </div>
-        <div>
-          <div class="relative aspect-[4/3] rounded-3xl card shadow-soft overflow-hidden">
-            <div class="absolute inset-0" style="background:radial-gradient(70% 70% at 30% 20%, rgba(234,223,217,.45), transparent), radial-gradient(60% 60% at 90% 90%, rgba(191,162,122,.22), transparent)"></div>
-            <div class="absolute inset-0 grid place-items-center">
-              <div class="h-serif text-4xl tracking-wide" style="color:var(--taupe)">Schönheit in Ruhe</div>
+    <section id="ueber" class="section-lg">
+      <div class="container">
+        <div class="grid grid-2" style="gap:40px; align-items:center">
+          <div>
+            <h2 class="h-serif">Über mich</h2>
+            <p class="prose" style="margin-top:12px">Ich bin <strong>Pia Harrsch‑Ritchie</strong> und begleite Sie mit Ruhe, Erfahrung und einem ganzheitlichen Blick. Mein Fokus: individuelle Hautpflege, die wirkt – mit Transparenz, Zeit und achtsamer Beratung.</p>
+            <ul class="prose" style="margin-top:12px; padding-left:0; list-style:none">
+              <li>• Kooperation mit Ludwigsburger Hautarztpraxis</li>
+              <li>• Zusatzausbildungen in Pathophysiognomik & Kinesiologie</li>
+              <li>• Termine nach Vereinbarung – private Rückzugsatmosphäre</li>
+            </ul>
+          </div>
+          <div>
+            <div class="about-media card shadow-soft">
+              <div class="overlay"></div>
+              <div class="center">
+                <div class="h-serif" style="font-size:42px; color:var(--taupe)">Schönheit in Ruhe</div>
+              </div>
             </div>
           </div>
         </div>
@@ -170,84 +256,84 @@
     </section>
 
     <!-- Bewertungen kurz -->
-    <section class="py-18 md:py-24 bg-white/60">
-      <div class="mx-auto container-narrow px-5">
-        <h2 class="h-serif text-3xl md:text-4xl">Stimmen</h2>
-        <div class="mt-8 grid md:grid-cols-3 gap-6">
-          <figure class="card rounded-2xl p-6">
-            <blockquote class="text-sm text-neutral-700">„Sehr angenehme und effektive Behandlung – ich fühlte mich rundum gut aufgehoben.“</blockquote>
-            <figcaption class="mt-3 text-xs text-neutral-500">– Treatwell Bewertung</figcaption>
+    <section class="section" style="background:#ffffff99">
+      <div class="container">
+        <h2 class="h-serif">Stimmen</h2>
+        <div class="grid grid-3" style="margin-top:24px">
+          <figure class="card shadow-soft">
+            <blockquote class="prose muted">„Sehr angenehme und effektive Behandlung – ich fühlte mich rundum gut aufgehoben.“</blockquote>
+            <figcaption class="muted" style="font-size:12px; margin-top:8px">– Treatwell Bewertung</figcaption>
           </figure>
-          <figure class="card rounded-2xl p-6">
-            <blockquote class="text-sm text-neutral-700">„Wirkstoffkosmetik mit ehrlicher Beratung. Meine Haut ist sichtbar beruhigt.“</blockquote>
-            <figcaption class="mt-3 text-xs text-neutral-500">– Kund:innen-Feedback</figcaption>
+          <figure class="card shadow-soft">
+            <blockquote class="prose muted">„Wirkstoffkosmetik mit ehrlicher Beratung. Meine Haut ist sichtbar beruhigt.“</blockquote>
+            <figcaption class="muted" style="font-size:12px; margin-top:8px">– Kund:innen-Feedback</figcaption>
           </figure>
-          <figure class="card rounded-2xl p-6">
-            <blockquote class="text-sm text-neutral-700">„Ruhige Atmosphäre, liebevoll – genau die Auszeit, die ich gesucht habe.“</blockquote>
-            <figcaption class="mt-3 text-xs text-neutral-500">– Online Rezension</figcaption>
+          <figure class="card shadow-soft">
+            <blockquote class="prose muted">„Ruhige Atmosphäre, liebevoll – genau die Auszeit, die ich gesucht habe.“</blockquote>
+            <figcaption class="muted" style="font-size:12px; margin-top:8px">– Online Rezension</figcaption>
           </figure>
         </div>
       </div>
     </section>
 
     <!-- Kontakt -->
-    <section id="kontakt" class="py-18 md:py-24">
-      <div class="mx-auto container-narrow px-5 grid md:grid-cols-2 gap-10">
-        <div>
-          <h2 class="h-serif text-3xl md:text-4xl">Kontakt & Anfahrt</h2>
-          <div class="mt-6 card rounded-2xl p-6">
-            <p class="font-medium">RELAX & CARE – Studio</p>
-            <p>Am Zuckerberg 72<br>71640 Ludwigsburg</p>
-            <div class="mt-4 space-y-1">
-              <p><span class="font-medium">Telefon:</span> 07141&nbsp;–&nbsp;972800</p>
-              <p><span class="font-medium">Mobil:</span> 0172&nbsp;–&nbsp;6929471</p>
-              <p><span class="font-medium">E‑Mail:</span> <a class="underline decoration-[var(--gold)] underline-offset-4" href="mailto:info@relaxandcare.de">info@relaxandcare.de</a></p>
-              <p><span class="font-medium">Online buchen:</span> <a class="underline decoration-[var(--gold)] underline-offset-4" href="https://www.treatwell.de/ort/relax-care/" target="_blank">Treatwell</a></p>
-              <p class="text-sm text-neutral-600 mt-2">Öffnungszeiten: Termine nach Vereinbarung</p>
+    <section id="kontakt" class="section-lg">
+      <div class="container">
+        <div class="grid grid-2" style="gap:40px">
+          <div>
+            <h2 class="h-serif">Kontakt & Anfahrt</h2>
+            <div class="card shadow-soft contact-card" style="margin-top:16px; padding:24px">
+              <p><strong>RELAX & CARE – Studio</strong></p>
+              <p>Am Zuckerberg 72<br>71640 Ludwigsburg</p>
+              <p><strong>Telefon:</strong> 07141 – 972800</p>
+              <p><strong>Mobil:</strong> 0172 – 6929471</p>
+              <p><strong>E‑Mail:</strong> <a href="mailto:info@relaxandcare.de" style="text-decoration:underline; text-decoration-color:var(--gold); text-underline-offset:4px">info@relaxandcare.de</a></p>
+              <p><strong>Online buchen:</strong> <a href="https://www.treatwell.de/ort/relax-care/" target="_blank" style="text-decoration:underline; text-decoration-color:var(--gold); text-underline-offset:4px">Treatwell</a></p>
+              <p class="muted" style="font-size:14px">Öffnungszeiten: Termine nach Vereinbarung</p>
+            </div>
+            <div class="socials">
+              <a href="https://www.instagram.com/relaxandcare.ludwigsburg/" target="_blank">Instagram</a>
+              <a href="https://www.facebook.com/relaxandcarepia/" target="_blank">Facebook</a>
+              <a href="https://wa.me/491726929471" target="_blank">WhatsApp</a>
             </div>
           </div>
-          <div class="mt-4 flex gap-3">
-            <a href="https://www.instagram.com/relaxandcare.ludwigsburg/" target="_blank" class="btn-ghost rounded-full px-4 py-2 text-sm">Instagram</a>
-            <a href="https://www.facebook.com/relaxandcarepia/" target="_blank" class="btn-ghost rounded-full px-4 py-2 text-sm">Facebook</a>
-            <a href="https://wa.me/491726929471" target="_blank" class="btn-ghost rounded-full px-4 py-2 text-sm">WhatsApp</a>
-          </div>
-        </div>
-        <div>
-          <div class="aspect-[4/3] w-full overflow-hidden rounded-3xl card shadow-soft">
-            <iframe title="Karte – RELAX & CARE" class="w-full h-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Am%20Zuckerberg%2072%2C%2071640%20Ludwigsburg&output=embed"></iframe>
-          </div>
-          <form class="mt-6 grid gap-3" onsubmit="event.preventDefault(); alert('Danke! Wir melden uns schnellstmöglich.');">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <input class="rounded-xl border border-neutral-300 bg-white px-4 py-3" placeholder="Ihr Name" required>
-              <input class="rounded-xl border border-neutral-300 bg-white px-4 py-3" placeholder="Ihre E‑Mail" type="email" required>
+          <div>
+            <div class="map card shadow-soft">
+              <iframe title="Karte – RELAX & CARE" style="width:100%; height:100%; border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Am%20Zuckerberg%2072%2C%2071640%20Ludwigsburg&output=embed"></iframe>
             </div>
-            <input class="rounded-xl border border-neutral-300 bg-white px-4 py-3" placeholder="Ihre Telefonnummer (optional)">
-            <textarea class="rounded-xl border border-neutral-300 bg-white px-4 py-3 min-h-[120px]" placeholder="Ihre Nachricht"></textarea>
-            <button class="btn rounded-xl px-6 py-3 w-max font-semibold shadow-soft">Nachricht senden</button>
-          </form>
+            <form class="contact" onsubmit="event.preventDefault(); alert('Danke! Wir melden uns schnellstmöglich.');">
+              <div class="row">
+                <input placeholder="Ihr Name" required>
+                <input placeholder="Ihre E‑Mail" type="email" required>
+              </div>
+              <input placeholder="Ihre Telefonnummer (optional)">
+              <textarea placeholder="Ihre Nachricht"></textarea>
+              <button class="btn" type="submit">Nachricht senden</button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white/60">
+    <footer>
       <div class="divider"></div>
-      <div class="mx-auto container-narrow px-5 py-10 text-sm text-neutral-700">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <p class="h-serif text-lg">Relax & Care • Ludwigsburg</p>
+      <div class="container" style="padding:28px 20px; font-size:14px; color:#555">
+        <div class="footer-top">
+          <p class="h-serif" style="font-size:18px">Relax & Care • Ludwigsburg</p>
           <p>© <span id="y"></span> Alle Rechte vorbehalten</p>
-          <div class="flex gap-5">
-            <a href="#impressum" class="underline decoration-[var(--gold)] underline-offset-4">Impressum</a>
-            <a href="#datenschutz" class="underline decoration-[var(--gold)] underline-offset-4">Datenschutz</a>
+          <div class="footer-links">
+            <a href="#impressum">Impressum</a>
+            <a href="#datenschutz">Datenschutz</a>
           </div>
         </div>
-        <div id="impressum" class="mt-8">
-          <h3 class="h-serif text-xl">Impressum</h3>
-          <p class="mt-2">Pia Harrsch‑Ritchie • Am Zuckerberg 72 • 71640 Ludwigsburg • Telefon 07141‑972800 • E‑Mail <a href="mailto:info@relaxandcare.de" class="underline decoration-[var(--gold)] underline-offset-4">info@relaxandcare.de</a></p>
+        <div id="impressum" style="margin-top:18px">
+          <h3 class="h-serif" style="font-size:20px; margin:0">Impressum</h3>
+          <p style="margin:8px 0 0 0">Pia Harrsch‑Ritchie • Am Zuckerberg 72 • 71640 Ludwigsburg • Telefon 07141‑972800 • E‑Mail <a href="mailto:info@relaxandcare.de" style="text-decoration:underline; text-decoration-color:var(--gold); text-underline-offset:4px">info@relaxandcare.de</a></p>
         </div>
-        <div id="datenschutz" class="mt-6">
-          <h3 class="h-serif text-xl">Datenschutz</h3>
-          <p class="mt-2">Hinweis: Bitte Ihre vollständigen DSGVO‑Informationen ergänzen.</p>
+        <div id="datenschutz" style="margin-top:18px">
+          <h3 class="h-serif" style="font-size:20px; margin:0">Datenschutz</h3>
+          <p style="margin:8px 0 0 0">Hinweis: Bitte Ihre vollständigen DSGVO‑Informationen ergänzen.</p>
         </div>
       </div>
     </footer>
